@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { selectUser } from '../users/usersSlise';
+import { selectUser } from '../../store/usersSlise';
 import { Box } from '@mui/material';
 import { GITHUB_CLIENT_SECRET } from '../../constants';
-import { getUserProfile } from '../users/usersThunks';
-import Login from '../users/Login';
+import { getUserProfile } from '../../store/usersThunks';
+import Login from '../Users/Login';
 import Profile from '../../components/UI/Profile/Profile';
 
 const Home = () => {

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { GITHUB_CLIENT_ID } from '../../constants';
+import { GITHUB_CLIENT_ID } from '../constants';
 
 interface GitHubAccessTokenResponse {
   access_token: string;

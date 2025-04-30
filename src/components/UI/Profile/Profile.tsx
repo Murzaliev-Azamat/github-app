@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { selectUser } from '../../../pages/users/usersSlise';
+import { selectUser } from '../../../store/usersSlise';
 import { Avatar, Box, Button, Card, CardContent, Grid, IconButton, Link, TextField, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { UserMutation } from '../../../types';
-import { editUserProfile, getUserProfile } from '../../../pages/users/usersThunks';
+import { editUserProfile, getUserProfile } from '../../../store/usersThunks';
 
 const Profile = () => {
   const dispatch = useAppDispatch();

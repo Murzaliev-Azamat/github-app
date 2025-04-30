@@ -2,7 +2,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import { useAppSelector } from '../../../app/hooks';
 import UserMenu from './UserMenu';
-import { selectUser } from '../../../pages/users/usersSlise';
+import { selectUser } from '../../../store/usersSlise';
 import { Link as NavLink } from 'react-router-dom';
 import { AppBar, styled, Toolbar, Typography } from '@mui/material';
 

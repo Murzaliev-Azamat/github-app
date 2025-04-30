@@ -4,8 +4,8 @@ import { Button } from '@mui/material';
 
 const GitHubLoginButton = () => {
   const handleLogin = () => {
-    const loginParam = ''; // Здесь ты можешь передать логин пользователя, если необходимо
-    const scope = 'user'; // Права для работы с профилем пользователя
+    const loginParam = '';
+    const scope = 'repo user';
     window.location.href = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${scope}&login=${loginParam}`;
   };
 

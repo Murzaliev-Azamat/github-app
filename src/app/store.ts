@@ -1,9 +1,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { usersReducer } from '../pages/users/usersSlise';
+import { usersReducer } from '../store/usersSlise';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist/es/constants';
-import { authReducer } from '../pages/users/authSlice';
+import { authReducer } from '../store/authSlice';
+import { repositoriesReducer } from '../store/repositoriesSlice';
 
 const authPersistConfig = {
   key: 'test-attractor:auth',
@@ -11,9 +12,16 @@ const authPersistConfig = {
   whitelist: ['accessToken'],
 };
 
+const usersPersistConfig = {
+  key: 'test-attractor:users',
+  storage,
+  whitelist: ['user'],
+};
+
 const rootReducer = combineReducers({
-  users: usersReducer,
   auth: persistReducer(authPersistConfig, authReducer),
+  users: persistReducer(usersPersistConfig, usersReducer),
+  repositories: repositoriesReducer,
 });
 
 export const store = configureStore({

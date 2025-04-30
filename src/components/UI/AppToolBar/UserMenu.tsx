@@ -1,18 +1,30 @@
 import React from 'react';
 import { Button } from '@mui/material';
 import { useAppDispatch } from '../../../app/hooks';
-import { logout } from '../../../pages/users/usersThunks';
+import { logout } from '../../../store/usersThunks';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const UserMenu: React.FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     await dispatch(logout());
+    navigate('/');
   };
 
   return (
     <>
-      <Button onClick={handleLogout} sx={{ marginLeft: '10px', color: 'white' }}>
+      <Button
+        component={NavLink}
+        to="/repositories"
+        sx={{
+          color: 'white',
+        }}
+      >
+        Репозитории
+      </Button>
+      <Button onClick={handleLogout} sx={{ color: 'white' }}>
         Logout
       </Button>
     </>

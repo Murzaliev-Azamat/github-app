@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axiosApi from '../../axiosApi';
-import { User, UserMutation } from '../../types';
-import { GITHUB_CLIENT_ID } from '../../constants';
-import { RootState } from '../../app/store';
+import axiosApi from '../axiosApi';
+import { User, UserMutation } from '../types';
+import { GITHUB_CLIENT_ID } from '../constants';
+import { RootState } from '../app/store';
 import { deleteAccessToken } from './authSlice';
 import { clearUser } from './usersSlise';
 

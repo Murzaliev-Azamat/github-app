@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { RootState } from '../app/store';
 import { fetchAccessToken } from './authThunks';
-import { RootState } from '../../app/store';
 
 interface AuthState {
   accessToken: string | null;

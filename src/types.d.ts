@@ -15,3 +15,14 @@ export interface UserMutation {
   location: string;
   bio: string;
 }
+
+export interface Repository {
+  id: number;
+  private: boolean;
+  name: string;
+  html_url: string;
+  owner: {
+    login: string;
+    html_url: string;
+  };
+}
