@@ -1,41 +1,17 @@
-export interface RegisterMutation {
-  username: string;
-  password: string;
-  displayName: string;
-  image: File | null;
-}
-
 export interface User {
-  _id: string;
-  username: string;
-  displayName: string;
-  image?: string;
-  token: string;
-  role: string;
-}
-
-export interface RegisterResponse {
-  message: string;
-  user: User;
-}
-
-export interface ValidationError {
-  errors: {
-    [key: string]: {
-      name: string;
-      message: string;
-    };
-  };
-  message: string;
   name: string;
-  _name: string;
+  login: string;
+  email: string;
+  company: string;
+  location: string;
+  bio: string;
+  html_url: string;
+  avatar_url?: string;
 }
 
-export interface LoginMutation {
-  username: string;
-  password: string;
-}
-
-export interface GlobalError {
-  error: string;
+export interface UserMutation {
+  name: string;
+  company: string;
+  location: string;
+  bio: string;
 }

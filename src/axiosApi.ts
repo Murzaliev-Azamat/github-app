@@ -9,9 +9,13 @@ const axiosApi = axios.create({
 
 export const addInterceptors = (store: Store<RootState>) => {
   axiosApi.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-    const token = store.getState().users.user?.token;
+    const token = store.getState().auth.accessToken;
     const headers = config.headers as AxiosHeaders;
-    headers.set('Authorization', token);
+    headers.set('Authorization', `Bearer ${token}`);
+
+    if (!headers.has('Accept')) {
+      headers.set('Accept', 'application/vnd.github+json');
+    }
 
     return config;
   });

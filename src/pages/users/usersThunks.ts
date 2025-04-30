@@ -1,67 +1,57 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosApi from '../../axiosApi';
-import { isAxiosError } from 'axios';
-import { GlobalError, LoginMutation, RegisterMutation, RegisterResponse, User, ValidationError } from '../../types';
-import { unsetUser } from './usersSlise';
+import { User, UserMutation } from '../../types';
+import { GITHUB_CLIENT_ID } from '../../constants';
+import { RootState } from '../../app/store';
+import { deleteAccessToken } from './authSlice';
+import { clearUser } from './usersSlise';
 
-export const register = createAsyncThunk<User, RegisterMutation, { rejectValue: ValidationError }>(
-  'users/register',
-  async (registerMutation, { rejectWithValue }) => {
-    try {
-      const formData = new FormData();
+export const getUserProfile = createAsyncThunk<User>('users/getUserProfile', async () => {
+  const response = await axiosApi.get<User>('/user');
 
-      const keys = Object.keys(registerMutation) as (keyof RegisterMutation)[];
-      keys.forEach((key) => {
-        const value = registerMutation[key];
+  if (!response.data) {
+    throw new Error('Пользователь не найден');
+  }
 
-        if (value !== null) {
-          formData.append(key, value);
-        }
-      });
+  return response.data;
+});
 
-      const response = await axiosApi.post<RegisterResponse>('/users', formData);
-      return response.data.user;
-    } catch (e) {
-      if (isAxiosError(e) && e.response && e.response.status === 400) {
-        return rejectWithValue(e.response.data as ValidationError);
-      }
-      throw e;
-    }
-  },
-);
+export const editUserProfile = createAsyncThunk<void, UserMutation>('users/editUserProfile', async (params) => {
+  const profileData = {
+    name: params.name,
+    company: params.company,
+    location: params.location,
+    bio: params.bio,
+  };
 
-export const login = createAsyncThunk<User, LoginMutation, { rejectValue: GlobalError }>(
-  'users/login',
-  async (loginMutation, { rejectWithValue }) => {
-    try {
-      const response = await axiosApi.post<RegisterResponse>('/users/sessions', loginMutation);
-      return response.data.user;
-    } catch (e) {
-      if (isAxiosError(e) && e.response && e.response.status === 400) {
-        return rejectWithValue(e.response.data as GlobalError);
-      }
-      throw e;
-    }
-  },
-);
+  await axiosApi.patch('/user', profileData);
+});
 
-// export const googleLogin = createAsyncThunk<User, string, { rejectValue: GlobalError }>(
-//   'users/googleLogin',
-//
-//   async (credential, { rejectWithValue }) => {
-//     try {
-//       const response = await axiosApi.post<RegisterResponse>('/users/google', { credential });
-//       return response.data.user;
-//     } catch (e) {
-//       if (isAxiosError(e) && e.response && e.response.status === 400) {
-//         return rejectWithValue(e.response.data as GlobalError);
-//       }
-//       throw e;
-//     }
-//   },
-// );
+export const logout = createAsyncThunk<void, void, { state: RootState }>('users/logout', async (_, ThunkApi) => {
+  const accessToken = ThunkApi.getState().auth.accessToken;
+  const clientSecret = localStorage.getItem('client_secret');
 
-export const logout = createAsyncThunk('users/logout', async (_, { dispatch }) => {
-  await axiosApi.delete('/users/sessions');
-  dispatch(unsetUser());
+  if (!clientSecret) {
+    throw new Error('No client secret');
+  }
+
+  if (!accessToken) {
+    throw new Error('No access token');
+  }
+
+  await axiosApi.delete(
+    `https://cors-anywhere.herokuapp.com/https://api.github.com/applications/${GITHUB_CLIENT_ID}/token`,
+    {
+      auth: {
+        username: GITHUB_CLIENT_ID,
+        password: clientSecret,
+      },
+      data: {
+        access_token: accessToken,
+      },
+    },
+  );
+
+  ThunkApi.dispatch(deleteAccessToken());
+  ThunkApi.dispatch(clearUser());
 });
