@@ -5,6 +5,7 @@ import { persistReducer, persistStore } from 'redux-persist';
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist/es/constants';
 import { authReducer } from '../store/authSlice';
 import { repositoriesReducer } from '../store/repositoriesSlice';
+import { anotherUsersReducer } from '../store/anotherUsersSlice';
 
 const authPersistConfig = {
   key: 'test-attractor:auth',
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, authReducer),
   users: persistReducer(usersPersistConfig, usersReducer),
   repositories: repositoriesReducer,
+  anotherUsers: anotherUsersReducer,
 });
 
 export const store = configureStore({

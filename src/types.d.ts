@@ -26,3 +26,15 @@ export interface Repository {
     html_url: string;
   };
 }
+
+export interface AnotherUser {
+  id: number;
+  login: string;
+  repos_url: string;
+}
+
+export interface AnotherUsersResponse {
+  total_count: number;
+  incomplete_results: boolean;
+  items: AnotherUser[];
+}

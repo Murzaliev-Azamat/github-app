@@ -7,6 +7,7 @@ import GitHubCallback from './pages/GitHubCallback/GitHubCallback';
 import Repositories from './pages/Repositories/Repositories';
 import PublicRepositories from './pages/Repositories/PublicRepositories';
 import PrivateRepositories from './pages/Repositories/PrivateRepositories';
+import AnotherUsers from './pages/AnotherUsers/AnotherUsers';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="public" element={<PublicRepositories />} />
           <Route path="private" element={<PrivateRepositories />} />
         </Route>
+        <Route path="/another-users" element={<AnotherUsers />} />
         <Route path="*" element={<span>Такой страницы не существует</span>} />
       </Routes>
     </Box>

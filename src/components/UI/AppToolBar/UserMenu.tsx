@@ -17,6 +17,15 @@ const UserMenu: React.FC = () => {
     <>
       <Button
         component={NavLink}
+        to="/another-users"
+        sx={{
+          color: 'white',
+        }}
+      >
+        Другие пользователи
+      </Button>
+      <Button
+        component={NavLink}
         to="/repositories"
         sx={{
           color: 'white',
