@@ -5,14 +5,14 @@ import { editUserProfile, getUserProfile } from './usersThunks';
 
 interface UsersState {
   user: User | null;
-  fetchLoading: boolean;
-  editLoading: boolean;
+  fetchUserLoading: boolean;
+  editUserLoading: boolean;
 }
 
 const initialState: UsersState = {
   user: null,
-  fetchLoading: false,
-  editLoading: false,
+  fetchUserLoading: false,
+  editUserLoading: false,
 };
 
 export const usersSlice = createSlice({
@@ -25,23 +25,23 @@ export const usersSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getUserProfile.pending, (state) => {
-      state.fetchLoading = true;
+      state.fetchUserLoading = true;
     });
     builder.addCase(getUserProfile.fulfilled, (state, { payload: user }) => {
-      state.fetchLoading = false;
+      state.fetchUserLoading = false;
       state.user = user;
     });
     builder.addCase(getUserProfile.rejected, (state) => {
-      state.fetchLoading = false;
+      state.fetchUserLoading = false;
     });
     builder.addCase(editUserProfile.pending, (state) => {
-      state.editLoading = true;
+      state.editUserLoading = true;
     });
     builder.addCase(editUserProfile.fulfilled, (state) => {
-      state.editLoading = false;
+      state.editUserLoading = false;
     });
     builder.addCase(editUserProfile.rejected, (state) => {
-      state.editLoading = false;
+      state.editUserLoading = false;
     });
   },
 });
@@ -50,5 +50,5 @@ export const usersReducer = usersSlice.reducer;
 export const { clearUser } = usersSlice.actions;
 
 export const selectUser = (state: RootState) => state.users.user;
-export const selectFetchLoading = (state: RootState) => state.users.fetchLoading;
-export const selectEditLoading = (state: RootState) => state.users.fetchLoading;
+export const selectFetchUserLoading = (state: RootState) => state.users.fetchUserLoading;
+export const selectEditUserLoading = (state: RootState) => state.users.editUserLoading;

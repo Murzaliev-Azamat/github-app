@@ -1,7 +1,20 @@
 import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { selectUser } from '../../../store/usersSlise';
-import { Avatar, Box, Button, Card, CardContent, Grid, IconButton, Link, TextField, Typography } from '@mui/material';
+import { selectEditUserLoading, selectFetchUserLoading, selectUser } from '../../../store/usersSlise';
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CircularProgress,
+  Grid,
+  IconButton,
+  LinearProgress,
+  Link,
+  TextField,
+  Typography,
+} from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { UserMutation } from '../../../types';
 import { editUserProfile, getUserProfile } from '../../../store/usersThunks';
@@ -9,6 +22,9 @@ import { editUserProfile, getUserProfile } from '../../../store/usersThunks';
 const Profile = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
+  const fetchUserLoading = useAppSelector(selectFetchUserLoading);
+  const editUserLoading = useAppSelector(selectEditUserLoading);
+
   const [editField, setEditField] = useState<'name' | 'location' | 'company' | 'bio' | null>(null);
   const [state, setState] = useState<UserMutation>({
     name: user?.name || '',
@@ -48,7 +64,9 @@ const Profile = () => {
     setEditField(null);
   };
 
-  return (
+  return fetchUserLoading ? (
+    <LinearProgress />
+  ) : (
     user && (
       <Card sx={{ maxWidth: 600, margin: '0 auto', mt: 4, p: 2 }}>
         <CardContent>
@@ -69,8 +87,15 @@ const Profile = () => {
                       variant="outlined"
                       size="small"
                     />
-                    <Button onClick={submitFormHandler} variant="contained" size="small" sx={{ mt: 1 }}>
-                      Сохранить
+                    <Button
+                      onClick={submitFormHandler}
+                      variant="contained"
+                      size="small"
+                      sx={{ mt: 1 }}
+                      disabled={editUserLoading}
+                      startIcon={editUserLoading ? <CircularProgress size={16} color="inherit" /> : null}
+                    >
+                      {editUserLoading ? 'Сохранение...' : 'Сохранить'}
                     </Button>
                     <Button onClick={onButtonCancel} variant="outlined" size="small" sx={{ mt: 1, ml: 1 }}>
                       Отменить
@@ -97,8 +122,15 @@ const Profile = () => {
                       variant="outlined"
                       size="small"
                     />
-                    <Button onClick={submitFormHandler} variant="contained" size="small" sx={{ mt: 1 }}>
-                      Сохранить
+                    <Button
+                      onClick={submitFormHandler}
+                      variant="contained"
+                      size="small"
+                      sx={{ mt: 1 }}
+                      disabled={editUserLoading}
+                      startIcon={editUserLoading ? <CircularProgress size={16} color="inherit" /> : null}
+                    >
+                      {editUserLoading ? 'Сохранение...' : 'Сохранить'}
                     </Button>
                     <Button onClick={onButtonCancel} variant="outlined" size="small" sx={{ mt: 1, ml: 1 }}>
                       Отменить
@@ -133,8 +165,15 @@ const Profile = () => {
                       variant="outlined"
                       size="small"
                     />
-                    <Button onClick={submitFormHandler} variant="contained" size="small" sx={{ mt: 1 }}>
-                      Сохранить
+                    <Button
+                      onClick={submitFormHandler}
+                      variant="contained"
+                      size="small"
+                      sx={{ mt: 1 }}
+                      disabled={editUserLoading}
+                      startIcon={editUserLoading ? <CircularProgress size={16} color="inherit" /> : null}
+                    >
+                      {editUserLoading ? 'Сохранение...' : 'Сохранить'}
                     </Button>
                     <Button onClick={onButtonCancel} variant="outlined" size="small" sx={{ mt: 1, ml: 1 }}>
                       Отменить
@@ -162,8 +201,15 @@ const Profile = () => {
                       variant="outlined"
                       size="small"
                     />
-                    <Button onClick={submitFormHandler} variant="contained" size="small" sx={{ mt: 1 }}>
-                      Сохранить
+                    <Button
+                      onClick={submitFormHandler}
+                      variant="contained"
+                      size="small"
+                      sx={{ mt: 1 }}
+                      disabled={editUserLoading}
+                      startIcon={editUserLoading ? <CircularProgress size={16} color="inherit" /> : null}
+                    >
+                      {editUserLoading ? 'Сохранение...' : 'Сохранить'}
                     </Button>
                     <Button onClick={onButtonCancel} variant="outlined" size="small" sx={{ mt: 1, ml: 1 }}>
                       Отменить

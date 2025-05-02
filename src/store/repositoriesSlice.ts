@@ -5,12 +5,12 @@ import { getRepositories } from './repositoriesThunks';
 
 interface RepositoriesState {
   repositories: Repository[] | [];
-  fetchAllLoading: boolean;
+  fetchRepositoriesLoading: boolean;
 }
 
 const initialState: RepositoriesState = {
   repositories: [],
-  fetchAllLoading: false,
+  fetchRepositoriesLoading: false,
 };
 
 export const repositoriesSlice = createSlice({
@@ -19,14 +19,14 @@ export const repositoriesSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getRepositories.pending, (state) => {
-      state.fetchAllLoading = true;
+      state.fetchRepositoriesLoading = true;
     });
     builder.addCase(getRepositories.fulfilled, (state, action) => {
-      state.fetchAllLoading = false;
+      state.fetchRepositoriesLoading = false;
       state.repositories = action.payload;
     });
     builder.addCase(getRepositories.rejected, (state) => {
-      state.fetchAllLoading = false;
+      state.fetchRepositoriesLoading = false;
     });
   },
 });
@@ -34,4 +34,4 @@ export const repositoriesSlice = createSlice({
 export const repositoriesReducer = repositoriesSlice.reducer;
 
 export const selectRepositories = (state: RootState) => state.repositories.repositories;
-export const selectFetchAllLoading = (state: RootState) => state.repositories.fetchAllLoading;
+export const selectFetchRepositoriesLoading = (state: RootState) => state.repositories.fetchRepositoriesLoading;

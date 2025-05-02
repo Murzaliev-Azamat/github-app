@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { AppDispatch } from '../../app/store';
 import { fetchAccessToken } from '../../store/authThunks';
+import { LinearProgress } from '@mui/material';
 
 const GitHubCallback = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -27,7 +28,7 @@ const GitHubCallback = () => {
     void authorizeUser();
   }, [authorizeUser]);
 
-  return <div>Loading...</div>;
+  return <LinearProgress />;
 };
 
 export default GitHubCallback;

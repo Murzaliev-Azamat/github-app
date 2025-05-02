@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react';
-import { Box, Button, Grid, Paper, Typography } from '@mui/material';
+import { Box, Button, Grid, LinearProgress, Paper, Typography } from '@mui/material';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getRepositories } from '../../store/repositoriesThunks';
+import { selectFetchRepositoriesLoading } from '../../store/repositoriesSlice';
 
 const Repositories = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const fetchRepositoriesLoading = useAppSelector(selectFetchRepositoriesLoading);
 
   useEffect(() => {
     dispatch(getRepositories());
@@ -16,7 +18,7 @@ const Repositories = () => {
     }
   }, [location, dispatch, navigate]);
 
-  return (
+  return !fetchRepositoriesLoading ? (
     <Box sx={{ mt: 3, px: 2 }}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={3}>
@@ -40,6 +42,8 @@ const Repositories = () => {
         </Grid>
       </Grid>
     </Box>
+  ) : (
+    <LinearProgress />
   );
 };
 
